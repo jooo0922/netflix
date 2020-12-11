@@ -1,0 +1,514 @@
+/*
+CSS Variables :root{} 이거 뭔지 알지? 드림코딩에서 알려줬으니까...
+맨위에 변수들을 정의해놓고
+예를 들어서 어떤 태그 스타일의 컬러에 지정하려고 한다 하면
+tag{
+    color: var(--primary-color);
+}
+요런식으로 쓰면 됨.
+만약에 저 컬러를 바꾸고 싶으면 :root 안에 있는 값들만 바꿔주면 됨!
+*/
+:root{
+    --primary-color: #e50914;
+    --dark-color: #141414;
+}
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+webkit
+크롬과 사파리가 채용한 웹 브라우저 엔진이다.
+css속성 중 접두어(prefix)를 붙여야 하는 경우가 있는데, 
+'-webkit-' 접두어는 '구글, 사파리 브라우저에 적용'한다는 의미이다.
+
+이걸 붙이는 이유는, CSS3 표준안이 나오기 전 크롬,사파리 브라우저 별도 테스트용
+CSS 속성들이 있었는데, 이런것들은 표준안이 아니라 그냥 쓰면 다른 브라우저에서는 못읽음.
+따라서 다른 브라우저에서도 이런 속성들을 읽을 수 있게, 호환성, 크로스 브라우징을 위해 사용함.
+*/
+body{
+    font-family: 'Arial', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background: #000;
+    color: #999;
+}
+
+ul{
+    list-style: none;
+}
+
+h1, h2, h3, h4{
+    color: #fff;
+}
+
+a{
+    color: #fff;
+    text-decoration: none;
+}
+
+/*
+Responsive unit, 반응형 유닛, 상대 길이 단위(rem, em)
+
+대부분의 css는 절대적인 단위인 중 하나인 px을 사용하지만
+컨테이너 사이즈를 조절하거나, 브라우저에서 폰트 사이즈 설정을 바꿔도 
+px은 전혀 반응하지 않는다.
+
+마치 반응형을 고려해 width, height 을 % 단위로 지정하는 것처럼
+상대적인 유닛을 사용하는 것. 주로 사용되는 반응형 유닛들 정리.
+
+em: 쉽게 말하면 그냥 부모 태그의 폰트 사이즈를 곱한 값.
+    기본적으로 브라우저에서 html태그에 할당되는 폰트 사이즈는 16px
+    따라서, 가장 최상단 부모 태그가 16px이니 이걸 기준으로 자식 태그들에서 해당 값에 곱해서 사용함.
+    %랑 똑같다고 보면 됨. ex) font-size: 8em; = font-size: 800%;
+
+rem: r + em 즉, root + em.
+    em과 비슷하긴 한데, 부모에 따라서 사이즈가 지정되는 게 아니라
+    루트에 지정된 폰트 사이즈에 따라서 크기가 결정되는 아이.
+    즉, 최고 루트인 html 태그의 16px 값에다가 곱한 값이라고 보면 됨.
+    따라서 우리가 브라우저 환경 설정에서 폰트 사이즈를 변경하면 우리 페이지도
+    반응적으로 폰트 사이즈가 변경됨. 
+    만약 html 태그에 font-size: 24px; 처럼 폰트의 절댓값을 지정하면 브라우저 환경에서 설정해도 반응을 안함.
+vw, vh: '100vw = viewport, 즉 브라우저 너비에 100%를 쓰겠다.' '50vh = v브라우저 높이에 반을 쓰겠다.' 
+%: 부모 요소에 따라 상대적으로 크기가 계산되어짐. 1em = 100%
+*/
+p{
+    margin: 0.5rem 0;
+}
+
+img{
+    width: 100%; 
+}
+/* 
+모든 img태그는 그것이 들어간 container(부모태그)에 100%로 맞추도록 기본 설정하는게 좋다!
+그리고 이런 이미지 태그는 사이즈 조절 시 width 값만 조절하면 알아서 사이즈가 조정되는 거 같다.
+*/
+
+/* 여기까지는 굉장히 자주 사용되는 base styling*/
+
+.showcase{
+    width: 100%;
+    height: 93vh;
+    position: relative; 
+    /* 
+    '원래 있어야 하는 자리'에서 '상대적으로' 이동하는거! 
+    absolute: 해당 태그가 담겨있는 부모 태그(상자)의 끝에서부터 해당 px만큼 떨어트려서 이동하는거! 
+    */
+    background: url('background.jpg') no-repeat center center/cover; /* center/cover 관련 컬럼 북마크 참고 */
+}
+
+/*
+::after/before(:after/before)
+
+::이나 : 둘다 사용가능. 둘다 같은거.
+선택한 요소의 맨 마지막 자식으로 의사 요소를 하나 생성
+보통 content 속성과 함께 짝지어, 요소에 장식용 콘텐츠를 추가할 때 사용. 기본값은 인라인.
+
+그니까 블랙 톤 Overlay 를 깔아주려고 html에 div같은 거 추가해서 넣기가 좀 그러니까
+'장식용'으로 사용하기 위해 해당 태그의 마지막 자식으로 추가하는거.
+content 안에는 장식 요소에 넣고싶은 텍스트가 있으면 쓰고 없으면 비워둘 것.
+*/
+.showcase::after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* header안에 모든 요소보다 위에 있도록 함. 텍스트, 버튼 등의 요소는 가리면 안되니까 z-index: 2; 를 각각 달아줘야겠지 */
+    background: rgba(0, 0, 0, 0.6); /* 투명도 있는 컬러를 지정할 때 */
+    box-shadow: inset 120px 100px 250px #000000, inset -120px -100px 250px #000000;
+    /*
+    inset: 요소가 움푹 들어간 것처럼 그림자가 요소의 테두리 안, 배경색 위, 내부 콘텐츠 밑에 그려짐. 
+    박스 안쪽에 그림자가 생김.
+
+    마이너스 값들은 왼쪽에만 그림자가 쎄게 들어와서 오른쪽 그림자도 쎄개 잡아주기 위해 작성한 거.
+    */
+}
+
+.showcase-top{
+    position: relative;
+    z-index: 2;
+    height: 90px;
+}
+
+.showcase-top img{
+    width: 170px;
+    position: absolute; /* 가장 가까운 부모태그의 끝에서부터 이동 */
+    top: 50%;
+    left: 50%; /* 이미지의 모서리 기준 50%씩 이동한거라 정확히 가운데로 가지는 않음. 그래서 transform: translate; 사용.*/
+    transform: translate(-50%, -50%); /* 해당 요소의 길이 기준 -50%만큼 각각 x축, y축으로 '이동'시킨다 */
+}
+
+.showcase-top a{
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(-50%, -50%);
+}
+
+.showcase-content{
+    position: relative;
+    z-index: 2;
+    margin: auto; /* 브라우저가 적절한 여백 크기를 선택. 요소를 중앙 정렬하고 싶을 때 사용 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* flex 요소의 수평 방향 정렬 방식 설정 */
+    align-items: center; /* flex 요소의 수직 방향 정렬 방식 설정 */
+    text-align: center;
+    margin-top: 9rem;
+}
+
+.showcase-content h1{
+    font-weight: 700; /* 폰트(font)의 가중치(weight)나 굵기(boldness) */
+    font-size: 5.2rem;
+    line-height: 1.1; /*  height of a line box, 텍스트 줄간격 조절 시 쓰임. */
+    margin: 0 0 2rem;
+}
+
+.showcase-content p{
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: 400;
+    font-size: 1.9rem;
+    line-height: 1.25;
+    margin: 0 0 2rem;
+}
+
+/* 
+Utility class 
+CSS를 추가로 번복해서 작성하지 않아도
+공통된 속성들을 모아서 하나의 CSS를 만들어놓으면
+class name만 태그에 달아서 적용할 수 있게 만든 거?
+라고 보면 될거같음. 
+*/
+
+/* Tabs*/
+.tabs{
+    background: var(--dark-color);
+    padding-top: 1rem;
+    border-bottom: 3px solid #3d3d3d;
+}
+
+/* 
+flexbox나 grid를 사용할 때 
+align-items: center;
+justify-content: center;
+text-align: center; 
+얘내는 자주 쓰는 3형제
+*/
+.tabs .container{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 1fr 1fr 1fr 이렇게 쓰는거랑 똑같음 */
+    column-gap: 1rem; /* grid column 사이에 간격을 줄 때 */
+    align-items: center;
+    justify-content: center;
+    text-align: center; 
+}
+
+.tabs p{
+    font-size: 1.2rem;
+    padding-top: 0.5rem;
+}
+
+/* element1 > element2 모든 element2 중에서 부모 태그가 element1 인 애들을 모두 선택해라*/
+.tabs .container > div{
+    padding: 1.5rem 0;
+}
+
+/* 항상 hover했을 때의 스타일 속성은 따로 작성해야 함 */
+.tabs .container > div:hover{
+    color: #fff;
+    cursor: pointer;
+}
+
+.tab-border{
+    border-bottom: var(--primary-color) 4px solid;
+}
+
+/* Tab Content*/
+.tab-content{
+    padding: 3rem 0;
+    background: #000;
+    color: #fff;
+}
+
+/* Hide content initially */
+#tab-1-content,
+#tab-2-content,
+#tab-3-content{
+    display: none; 
+}
+
+/* 
+이렇게 해서 모든 tab-content는 안보이는게 default값이지만,
+show 클래스를 js로 붙였을 때
+display: blcok으로 show 클래스가 붙은 tab-content만 보이게 해줄거임.
+*/
+.show{
+    display: block !important;
+    /* 
+    !important 규칙이 사용된 스타일 선언은 다른 선언보다 우선함
+    하지만 스타일시트 내 자연스러운 종속을 깨뜨려 디버깅을 어렵게하는
+    나쁜 습관이라고 MDN에 나와있음.
+
+    가급적 CSS 종속, 명시도 규칙을 잘 활용하라고 함.
+    */ 
+}
+
+#tab-1-content .tab-1-content-inner{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 2rem;
+    row-gap: 2rem;
+    align-items: center;
+    justify-content: center;
+}
+
+#tab-2-content .tab-2-content-top{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    column-gap: 2rem;
+    justify-content: center;
+    align-items: center;
+}
+
+#tab-2-content .tab-2-content-bottom{
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 1rem;
+    row-gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.table{
+    width: 100%;
+    margin-top: 2rem;
+    border-collapse: collapse; /* 표 테두리(border)가 분리(separated) 또는 상쇄(collapsed)될 지를 결정*/
+    border-spacing: 0; /*인접한 표 칸의 테두리 간격을 지정. border-collapse가 separate여야 적용. */
+}
+
+.table thead th{
+    text-transform: uppercase;
+    padding: 0.8rem;
+}
+
+.table tbody tr td{
+    color: #999;
+    padding: 0.8rem 1.2rem;
+    text-align: center;
+}
+
+/* first-child 형제 요소 중 제일 첫번째 요소들만 선택해 */
+.table tbody tr td:first-child{
+    text-align: left;
+}
+
+/* 
+nth-child(odd) = nth-child(2n+1): 형제 요소 중 홀수번째들만, 
+nth-child(even) = nth-child(2n): 형제 요소 중 짝수번째들만 선택해 
+이런식으로 ()에 수식을 넣어서 형제 요소 중 n번째(들)만 선택 가능!
+*/
+.table tbody tr:nth-child(odd){
+    background: #222;
+}
+
+/* Footer */
+.footer{
+    max-width: 75%;
+    margin: 1rem auto;
+    overflow: auto; /* 콘텐츠(텍스트)가 안쪽 여백 상자에 들어가면 visible과 동일, 넘치면 스크롤바 제공*/
+}
+
+.footer, .footer a{
+    color: #999;
+    font-size: 0.9rem;
+}
+
+.footer p{
+    margin-bottom: 1.5rem;
+}
+
+.footer .footer-cols{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 2rem;
+    row-gap: 2rem;
+    /*
+    grid-gap(지금은 없어진 속성) = column-gap + row-gap
+    이기 때문에, 만약에 미디어 쿼리에서 4column -> 2column
+    이렇게 grid가 바뀌었을때, row(가로) 그리드 간의 간격도 줘서 여백으로 구분하려면
+    row-gap도 같이 주어야만 한다!
+    */
+}
+
+.footer li{
+    line-height: 1.9;
+}
+
+/* Container */
+.container{
+    max-width: 70%; /* 해당 스타일 규격은 tab-x와 tab-x-content 모두에 적용됨 */
+    margin: auto;
+    overflow: hidden;
+    /* 
+    element의 콘텐츠가 너무 커서(텍스트가 길다던가) 
+    요소의 블록 서식 맥락에 맞출 수 없을 때의 처리법을 지정
+    hidden은 element의 블록을 넘어가는 부분들은 그냥 감춘다. 없앤다.
+    */
+    padding: 0 2rem;
+}
+
+/* Text Style */
+.text-xl{
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.text-lg{
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.text-md{
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.text-center{
+    text-align: center; /* 혹시 텍스트를 가운데정렬 할 때 쓸 수 있도록 만들어 놓은 utility*/
+}
+
+.text-dark{
+    color: #999;
+}
+
+/* Buttons */
+.btn{
+    display: inline-block;
+    /*
+    inline: 줄바꿈 없음. width, height속성, margin, padding의 상하 간격 지정 불가능. 안에 컨텐츠 만큼만 크기가 잡힘
+    inline-block: 기본적으로 inline처럼 줄바꿈 없음. 그러나 block처럼 width, height, margin, padding 모두 지정 가능!
+    */
+    background: var(--primary-color);
+    color: #fff;
+    padding: 0.4rem 1.3rem;
+    font-size: 1rem;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    margin-right: 0.5rem;
+    outline: none;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.45); /* box-shadow: offset-x, offset-y, blur-radius, color; 마지막 0.45는 투명도(alpha) */
+    border-radius: 2px;
+}
+
+.btn:hover{
+    opacity: 0.9;
+}
+
+.btn-rounded{
+    border-radius: 5px;
+}
+
+.btn-xl{
+    font-size: 2rem;
+    padding: 1.5rem 2.1rem;
+    text-transform: uppercase; /* 이런식으로 html에 직접 대문자 입력보다는, css에서 대문자 전환을 하는게 더 나음 */
+}
+
+.btn-lg{
+    font-size: 1rem;
+    padding: 0.8rem 1.3rem;
+    text-transform: uppercase;
+}
+
+.btn-icon{
+    margin-left: 1rem;
+}
+
+@media(max-width: 960px){
+    .showcase{
+        height: 70vh;
+    }
+
+    .hide-sm{
+        display: none;
+        /* 미디어 쿼리에서만 적용되는 스타일 속성 */
+    }
+
+    .showcase-top img{
+        top: 30%;
+        left: 5%;
+        transform: translate(0);
+    }
+
+    .showcase-content h1{
+        font-size: 3.7rem;
+        line-height: 1;
+    }
+
+    .showcase-content p{
+        font-size: 1.5rem;
+    }
+
+    /* 
+    .footer-cols가 적용이 안되면 selector를 부모 요소의 클래스명에서부터 써볼것. 
+    css selector에서 항상 부모-자식 단계를 구체적으로 밝혀야 하는 이유! 
+    */
+    .footer .footer-cols{ 
+        grid-template-columns: repeat(2, 1fr);
+        /* 
+        미디어 쿼리에서 column 개수를 줄일때는
+        repeat의 반복 횟수만 변경하면 되고,
+        column-gap과 row-gap 둘다 미리 지정해놓을 것!!!
+        */
+    }
+
+    .btn-xl{
+        font-size: 1.5rem;
+        padding: 1.4rem 2rem;
+    }
+
+    .text-xl{
+        font-size: 1.5rem;
+    }
+
+    .text-lg{
+        font-size: 1.3rem;
+    }
+
+    .text-md{
+        font-size: 1rem;
+    }
+}
+
+@media(max-width: 700px){
+    /* 
+    그림자 크기는 px절대값이라서 스크린사이즈가 줄어도 계속 deep하고 넓은 상태라
+    배경 이미지가 너무 어두워보임. 그림자 사이즈도 스크린사이즈에 맞게 작아져야
+    */
+    .showcase::after{
+        box-shadow: inset 80px 80px 250px #000000, inset -80px -80px 250px #000000;
+    }
+    
+    #tab-1-content .tab-1-content-inner{
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    #tab-2-content .tab-2-content-top{
+        display: block;
+        text-align: center;
+    }
+
+    #tab-2-content .tab-2-content-bottom{
+        grid-template-columns: 1fr;
+    }
+}
+

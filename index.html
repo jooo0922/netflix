@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix - Watch TV Shows Online, Watch Movies Online</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/badb840659.js" crossorigin="anonymous"></script>
+    <script src="main.js" defer></script>
+</head>
+<body>
+
+    <header class="showcase">
+        <div class="showcase-top">
+            <img src="logo.png" alt="Netflix">
+            <!-- 
+                <img alt=""> 는 웹접근성을 고려해 이미지 콘텐츠를 간단명료하게 설명해주는 텍스트 
+                스크린 리더가 alt값을 읽어서 시각장애 사용자에게 이미지 내용을 설명해줌.
+            -->
+
+            <a href="#" class="btn btn-rounded">Sign In</a>
+            <!-- 
+                a.class1.class2 
+                이거는 Emmet으로 한 태그에 클래스 두개를 동시에 설정하는 표기법!
+
+                링크로 연결해주는 버튼은 <button>보다 <a>가 훨씬 스타일링이 쉽다
+                <a>, <button>, <input> 순으로 스타일 적용이 쉬움.
+            -->
+        
+        </div>
+        <div class="showcase-content">
+            <h1>See what's next</h1>
+            <p>Watch anywhere. Cancel anytime</p>
+            <a href="" class="btn btn-xl">
+                Watch free for 30 days
+                <i class="fas fa-chevron-right btn-icon"></i>
+            </a>
+        </div>
+    </header>
+
+    <section class="tabs">
+        <!-- 보통 이런 div는 말그대로 flex, grid 등을 만들기 위한 container 역할-->
+        <div class="container">
+            <!-- 
+                id값을 주는 이유는 javascript내에서 target 해야하기 때문. 
+                click event 받으면 content가 변하게 
+                tab-border 클래스는 tab밑에 red border를 js로 click event 받았을 때 
+                탭에서 탭으로 switch할 수 있도록
+                3개 탭 모두의 default class로 지정해놓은 거임.
+            -->
+            <div id="tab-1" class="tab-item tab-border">
+                <i class="fas fa-door-open fa-3x"></i>
+                <!-- fa-3x는 아이콘 크기 3배로 한다는 거 -->
+                <p class="hide-sm">Cancel anytime</p>
+                <!-- hide-sm은 스크린이 작아졌을때 아이콘 밑에 텍스트는 사라지는 media query에 쓸 것.-->
+            </div>
+            <div id="tab-2" class="tab-item">
+                <i class="fas fa-tablet-alt fa-3x"></i>
+                <p class="hide-sm">Watch anywhere</p>
+            </div>
+            <div id="tab-3" class="tab-item">
+                <i class="fas fa-tags fa-3x"></i>
+                <p class="hide-sm">Pick your price</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="tab-content">
+        <div class="container"> 
+            <!-- 
+                이 안에 3개의 서로 다른 content가 들어가야 함
+                tab content 각각을 html로 만들때는 자바스크립트로 효과를 줄 수 없으니,
+                하나 만들고  comment 처리한 뒤, 두 번째꺼 만들고 이런 식으로 해야 함...
+            -->
+
+            <!-- Tab Container 1 -->
+            <!-- 
+                js로 click 이벤트를 받으면 show 클래스명을 붙였다 똇다 하면서 컨텐트를 바꿔줄거임
+                근데 안에 content를 2 column grid로 짤거라서 container 용 div태그를 하나 더 만들거다.
+            -->
+            <div id="tab-1-content" class="tab-content-item show"> 
+                <div class="tab-1-content-inner">
+                    <div>
+                        <p class="text-lg">
+                            If you decide Netflix isn't for you - no problem. No commitment. Cancel online anytime.
+                        </p>
+                        <a href="#" class="btn btn-lg">Watch Free For 30 Days</a>
+                    </div>
+                    <img src="tab-content-1.png" alt="">
+                </div>
+            </div>
+
+            <!-- Tab Container 2 -->
+            <div id="tab-2-content" class="tab-content-item"> 
+                <div class="tab-2-content-top">
+                    <p class="text-lg">
+                        Watch TV shows and movies anytime, anywhere — personalized for you.
+                    </p>
+                    <a href="#" class="btn btn-lg">Watch Free For 30 Days</a>
+                </div>
+                <div class="tab-2-content-bottom">
+                    <div>
+                        <img src="tab-content-2-1.png" alt="">
+                        <p class="text-md">Watch on your TV</p>
+                        <p class="text-dark">
+                            Smart TVs, PlayStation, Xbox, Chromecast, Apple TV, Blu-ray players and more.
+                        </p>
+                    </div>
+
+                    <div>
+                        <img src="tab-content-2-2.png" alt="">
+                        <p class="text-md">Watch instantly or download for later</p>
+                        <p class="text-dark">
+                            Available on phone and tablet, wherever you go.
+                        </p>
+                    </div>
+
+                    <div>
+                        <img src="tab-content-2-3.png" alt="">
+                        <p class="text-md">Use any computer</p>
+                        <p class="text-dark">
+                            Watch right on Netflix.com.
+                        </p>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <!-- Tab 3 Content -->
+            <div id="tab-3-content" class="tab-content-item">
+                <div class="text-center">
+                    <p class="text-lg">
+                        Choose one plan and watch everything on Netflix.
+                    </p>
+                    <a href="#" class="btn btn-lg">Watch Free For 30 Days</a>
+                </div>
+                <table class="table">
+                <!--
+                    <thead>: table 머리에 해당하는 맨 윗줄
+                    <tbody>: table 본문
+                    <tr>: table 행, 가로줄 
+                    <th>: 헤더 칸(cell)을 나타내는 태그
+                    <td>: 일반적인 칸(cell)을 나타내는 태그
+                -->
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Basic</th>
+                            <th>Standard</th>
+                            <th>Premium</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Monthly price after free month ends on 6/19/19</td>
+                            <td>$8.99</td>
+                            <td>$12.99</td>
+                            <td>$15.99</td>
+                        </tr>
+                        <tr>
+                            <td>HD Available</td>
+                            <td><i class="fas fa-times"></i></td>
+                            <td><i class="fas fa-check"></i></td>
+                            <td><i class="fas fa-check"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Ultra HD Available</td>
+                            <td><i class="fas fa-times"></i></td>
+                            <td><i class="fas fa-times"></i></td>
+                            <td><i class="fas fa-check"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Screens you can watch on at the same time</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>Watch on your laptop, TV, phone and tablet</td>
+                            <td><i class="fas fa-check"></i></td>
+                            <td><i class="fas fa-check"></i></td>
+                            <td><i class="fas fa-check"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Unlimited movies and TV shows</td>
+                            <td><i class="fas fa-check"></i></td>
+                            <td><i class="fas fa-check"></i></td>
+                            <td><i class="fas fa-check"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Cancel anytime</td>
+                            <td><i class="fas fa-check"></i></td>
+                            <td><i class="fas fa-check"></i></td>
+                            <td><i class="fas fa-check"></i></td>
+                        </tr>
+                        <tr>
+                            <td>First month free</td>
+                            <td><i class="fas fa-check"></i></td>
+                            <td><i class="fas fa-check"></i></td>
+                            <td><i class="fas fa-check"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>Questions? Call 1-866-579-7172</p>
+        <div class="footer-cols">
+            <ul>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">Investor Relations</a></li>
+                <li><a href="#">Ways To Watch</a></li>
+                <li><a href="#">Corporate Information</a></li>
+                <li><a href="#">Netflix Originals</a></li>
+            </ul>
+            <ul>
+                <li><a href="#">Help Center</a></li>
+                <li><a href="#">Jobs</a></li>
+                <li><a href="#">Terms Of Use</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+            <ul>
+                <li><a href="#">Account</a></li>
+                <li><a href="#">Redeem Gift Cards</a></li>
+                <li><a href="#">Privacy</a></li>
+                <li><a href="#">Speed Test</a></li>
+            </ul>
+            <ul>
+                <li><a href="#">Media Center</a></li>
+                <li><a href="#">Buy Gift Cards</a></li>
+                <li><a href="#">Cookie Preferences</a></li>
+                <li><a href="#">Legal Notices</a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+</html>
